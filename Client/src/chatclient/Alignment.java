@@ -10,14 +10,14 @@ import javax.swing.JFrame;
  * @author DaleRoyFall
  */
 public class Alignment {
-    public static void center(JFrame currentWindow) {
-        Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-        Point point = new Point((int)(screenDimension.getWidth() - currentWindow.getWidth()) / 2,
-                                (int)(screenDimension.getHeight() - currentWindow.getHeight()) / 2);
-                currentWindow.setLocation(point);
+    public static void center(JFrame thisWindow) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        Point coordinates = new Point((int)(dimension.getWidth() - thisWindow.getWidth()) / 2,
+                                (int)(dimension.getHeight() - thisWindow.getHeight()) / 2);
+                thisWindow.setLocation(coordinates);
     }
     
-    public static void alignWindowToPoint(JFrame currentWindow, Point point) {
-        currentWindow.setLocation(point);
+    public static void alignWindowToPoint(JFrame currentWindow, Point coordinates) {
+        currentWindow.setLocation(coordinates);
     }
 }

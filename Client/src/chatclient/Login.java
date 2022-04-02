@@ -12,7 +12,6 @@ import java.net.Socket;
 public class Login extends javax.swing.JFrame {
 
     private MouseEvent getPositionEvent;
-
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField portField;
     private javax.swing.JLabel resultLabel;
@@ -22,7 +21,6 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-
         resultLabel.setForeground(Color.red);
     }
 
@@ -47,10 +45,10 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setPreferredSize(new java.awt.Dimension(800, 450));
         getContentPane().setLayout(null);
 
-        jPanelDragWindow.setBackground(new java.awt.Color(1, 50, 67));
+        jPanelDragWindow.setBackground(new java.awt.Color(156, 215, 236));
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanelDragWindowMouseDragged(evt);
@@ -61,8 +59,8 @@ public class Login extends javax.swing.JFrame {
                 jPanelDragWindowMousePressed(evt);
             }
         });
+        jPanelCloseWindow.setBackground(new java.awt.Color(66, 96, 128));
 
-        jPanelCloseWindow.setBackground(new java.awt.Color(228, 241, 254));
         jPanelCloseWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanelCloseWindowMousePressed(evt);
@@ -94,26 +92,26 @@ public class Login extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanelDragWindow);
-        jPanelDragWindow.setBounds(0, 0, 500, 50);
+        jPanelDragWindow.setBounds(0, 0, 800, 70);
 
-        jPanel1.setBackground(new java.awt.Color(52, 73, 94));
+        jPanel1.setBackground(new java.awt.Color(200, 173, 194));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel4.setText("Name");
+        jLabel4.setForeground(new java.awt.Color(140, 40, 240));
+        jLabel4.setText("Nickname");
 
         portField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        portField.setText("1234");
+        portField.setText("1111");
         portField.setBorder(null);
         portField.setMargin(new java.awt.Insets(20, 2, 2, 2));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setForeground(new java.awt.Color(140, 40, 240));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Login");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel5.setForeground(new java.awt.Color(140, 40, 240));
         jLabel5.setText("Port");
 
         nameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -179,7 +177,7 @@ public class Login extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 50, 500, 350);
+        jPanel1.setBounds(0, 50, 800, 400);
 
         pack();
     }
@@ -202,9 +200,9 @@ public class Login extends javax.swing.JFrame {
         String port = portField.getText();
 
         if (name.isEmpty()) {
-            resultLabel.setText("Invalid name!");
+            resultLabel.setText("Nickname is invalid!");
         } else if (port.isEmpty()) {
-            resultLabel.setText("Invalid port!");
+            resultLabel.setText("Number of port is invalid!");
         } else {
             try {
                 Socket socket = new Socket("localhost", Integer.parseInt(port));
@@ -214,7 +212,7 @@ public class Login extends javax.swing.JFrame {
                 clientForm.setVisible(true);
                 
             } catch (IOException ex) {
-                resultLabel.setText("Can't connect to server!");
+                resultLabel.setText("Unable to connect to server!");
             }
         }
     }

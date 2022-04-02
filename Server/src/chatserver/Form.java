@@ -62,10 +62,10 @@ public class Form extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new Color(92, 151, 191));
+        jPanel2.setBackground(new Color(114, 246, 252));
 
         jTextFieldPort.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldPort.setText("1234");
+        jTextFieldPort.setText("1111");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabel1.setText("Port:");
@@ -114,18 +114,18 @@ public class Form extends javax.swing.JFrame {
             .addComponent(jPanelServerStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 500, 50));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 800, 50));
 
         jTextPaneLog.setEditable(false);
-        jTextPaneLog.setBackground(new Color(34, 49, 63));
+        jTextPaneLog.setBackground(new Color(200, 173, 194));
         jTextPaneLog.setBorder(null);
         jTextPaneLog.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextPaneLog.setForeground(new Color(228, 241, 254));
+        jTextPaneLog.setForeground(new Color(140, 40, 240));
         jScrollPane1.setViewportView(jTextPaneLog);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 500, 300));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 800, 300));
+         jPanelDragWindow.setBackground(new Color(156, 215, 236));
 
-        jPanelDragWindow.setBackground(new Color(1, 50, 67));
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(MouseEvent evt) {
                 jPanelDragWindowMouseDragged(evt);
@@ -136,8 +136,8 @@ public class Form extends javax.swing.JFrame {
                 jPanelDragWindowMousePressed(evt);
             }
         });
+         jPanelCloseWindow.setBackground(new Color(66, 96, 128));
 
-        jPanelCloseWindow.setBackground(new Color(228, 241, 254));
         jPanelCloseWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 jPanelCloseWindowMousePressed(evt);
@@ -168,10 +168,10 @@ public class Form extends javax.swing.JFrame {
             .addComponent(jPanelCloseWindow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanelDragWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 50));
+        getContentPane().add(jPanelDragWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 50));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     private void jPanelCloseWindowMousePressed(MouseEvent evt) {
         System.exit(0);
@@ -212,7 +212,7 @@ public class Form extends javax.swing.JFrame {
             addToLogPanel("Server", "Server started!");
             waitForClient();
         } catch (IOException ex) {
-            System.err.println("Couldn't listen on port " + port);
+            System.err.println("Could not listen on indicated port" + port);
         }
     }
 

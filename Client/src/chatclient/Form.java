@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package chatclient;
 
 import java.awt.event.MouseEvent;
@@ -22,7 +27,7 @@ public class Form extends javax.swing.JFrame {
 
     private boolean running;
 
-    private final String nickname;
+    private String nickname;
     private int port;
 
     private javax.swing.JList<String> clientList;
@@ -73,7 +78,7 @@ public class Form extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setPreferredSize(new java.awt.Dimension(800, 450));
         getContentPane().setLayout(null);
 
         jTextPaneChat.setEditable(false);
@@ -102,7 +107,7 @@ public class Form extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 440, 600, 79);
 
-        jPanelDragWindow.setBackground(new java.awt.Color(1, 50, 67));
+        jPanelDragWindow.setBackground(new java.awt.Color(156, 215, 236));
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanelDragWindowMouseDragged(evt);
@@ -114,7 +119,7 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
-        jPanelCloseWindow.setBackground(new java.awt.Color(228, 241, 254));
+        jPanelCloseWindow.setBackground(new java.awt.Color(66, 96, 128));
         jPanelCloseWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanelCloseWindowMousePressed(evt);
@@ -187,7 +192,7 @@ public class Form extends javax.swing.JFrame {
     private void jPanelDragWindowMousePressed(java.awt.event.MouseEvent evt) {
 
         getPositionEvent = evt;
-    }
+    }                                             
 
     public void messageListener() {
         new Thread("Listener") {
@@ -219,27 +224,33 @@ public class Form extends javax.swing.JFrame {
             if (!this.nickname.equals(name)) {
                 addMessageToChat("    User [" + name + "] enter to the chat.");
             }
+
             return true;
+
         } else if (message.startsWith("\\disconnect:")) {
             String name = message.substring(message.indexOf(":") + 1);
+
             addMessageToChat("    User [" + name + "] exit from the chat.");
+
             return true;
         } else if(message.startsWith("\\userlist:")) {
             String[] users = message.split(":");
+
             listModel.clear();
             for(int i = 1; i < users.length; i++) {
                 addToList(users[i]);
             }
+
             return true;
         }
+
         return false;
     }
 
     private void addMessageToChat(String message) {
          jTextPaneChat.setText(jTextPaneChat.getText().concat(message + "\n"));
     }
-
-    public void addToList(String name) {
+      public void addToList(String name) {
         listModel.addElement(name);
     }
 
