@@ -50,7 +50,7 @@ public class Form extends javax.swing.JFrame {
             addMessage("\n");
             clientList.setModel(listModel);
             running = true;
-            listener();
+            messageListener();
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,12 +84,12 @@ public class Form extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextPaneChat);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(10, 60, 400, 270);
+        jScrollPane2.setBounds(10, 60, 700, 270);
 
         jScrollPaneClientList.setViewportView(clientList);
 
         getContentPane().add(jScrollPaneClientList);
-        jScrollPaneClientList.setBounds(410, 60, 80, 270);
+        jScrollPaneClientList.setBounds(710, 60, 80, 270);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,24 +103,24 @@ public class Form extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 440, 600, 79);
+        jPanel1.setBounds(0, 440, 700, 79);
 
         jPanelDragWindow.setBackground(new java.awt.Color(156, 215, 236));
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                dragWindow(evt);
+                jPanelDragWindowMouseDragged(evt);
             }
         });
         jPanelDragWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                dragWindowPressedMouse(evt);
+                jPanelDragWindowMousePressed(evt);
             }
         });
 
         jPanelCloseWindow.setBackground(new java.awt.Color(66, 96, 128));
         jPanelCloseWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                closeWindow(evt);
+                jPanelCloseWindowMousePressed(evt);
             }
         });
 
@@ -149,14 +149,14 @@ public class Form extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanelDragWindow);
-        jPanelDragWindow.setBounds(0, 0, 500, 50);
+        jPanelDragWindow.setBounds(0, 0, 800, 50);
         getContentPane().add(messageTextField);
         messageTextField.setBounds(10, 350, 390, 20);
 
         sendMessageButton.setText("Send");
         sendMessageButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                sendMessage(evt);
+                sendMessageButtonMousePressed(evt);
             }
         });
         getContentPane().add(sendMessageButton);
@@ -165,7 +165,7 @@ public class Form extends javax.swing.JFrame {
         pack();
     }
 
-    private void sendMessage(java.awt.event.MouseEvent evt) {
+    private void sendMessageButtonMousePressed(java.awt.event.MouseEvent evt) {
         String message = messageTextField.getText();
 
         try {
@@ -178,21 +178,21 @@ public class Form extends javax.swing.JFrame {
         }
     }
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {
+    private void jPanelCloseWindowMousePressed(java.awt.event.MouseEvent evt) {
         closeClient();
     }
 
-    private void dragWindow(java.awt.event.MouseEvent evt) {
+    private void jPanelDragWindowMouseDragged(java.awt.event.MouseEvent evt) {
           setLocation(evt.getXOnScreen() - getPositionEvent.getX(),
                 evt.getYOnScreen() - getPositionEvent.getY());
     }
 
-    private void dragWindowPressedMouse(java.awt.event.MouseEvent evt) {
+    private void jPanelDragWindowMousePressed(java.awt.event.MouseEvent evt) {
 
         getPositionEvent = evt;
     }                                             
 
-    public void listener() {
+    public void messageListener() {
         new Thread("Listener") {
             @Override
             public void run() {
@@ -201,7 +201,7 @@ public class Form extends javax.swing.JFrame {
                         String message = dIS.readUTF();
 
                         if (!message.isEmpty()) {
-                            if (!Command(message)) {
+                            if (!isCommand(message)) {
                                 addMessage(message);
                             }
                         }
@@ -214,7 +214,7 @@ public class Form extends javax.swing.JFrame {
         }.start();
     }
 
-    private boolean Command(String message) {
+    private boolean isCommand(String message) {
         if (message.startsWith("\\connect:")) {
 
             String name = message.substring(message.indexOf(":") + 1);

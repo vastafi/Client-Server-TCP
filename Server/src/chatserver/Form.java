@@ -123,7 +123,7 @@ public class Form extends javax.swing.JFrame {
         jTextPaneLog.setForeground(new Color(140, 40, 240));
         jScrollPane1.setViewportView(jTextPaneLog);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 800, 300));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 800, 400));
          jPanelDragWindow.setBackground(new Color(156, 215, 236));
 
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -208,7 +208,7 @@ public class Form extends javax.swing.JFrame {
             serverSocket = new ServerSocket(port);
             running = true;
 
-            addPanel("Server", "Server started!");
+            addToLogPanel("Server", "Server started!");
             waitClient();
         } catch (IOException ex) {
             System.err.println("Could not listen on indicated port" + port);
@@ -236,14 +236,14 @@ public class Form extends javax.swing.JFrame {
             serverSocket.close();
             running = false;
             
-            addPanel("Server", "Server closed!");
+            addToLogPanel("Server", "Server closed!");
             System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    protected static void addPanel(String name, String message) {
+    protected static void addToLogPanel(String name, String message) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         String messageToAdd = "   " + dateFormat.format(date) + " [" + name + "]  :  " + message + "\n";

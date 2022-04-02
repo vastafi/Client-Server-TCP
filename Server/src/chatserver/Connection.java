@@ -53,8 +53,8 @@ public class Connection extends Thread {
             while (running) {
                String message = dIS.readUTF();
                 if (!message.isEmpty()) {
-                    if (!Connect(message)) {
-                        Form.addPanel(nickname, message);
+                    if (!isCommand(message)) {
+                        Form.addToLogPanel(nickname, message);
                         sendMessage("    [" + nickname + "]:" + message);
                     } else {
                         sendMessage(message);
@@ -69,7 +69,7 @@ public class Connection extends Thread {
         }
     }
     
-    private boolean Connect(String message) {
+    private boolean isCommand(String message) {
         if (message.startsWith("\\connect:")) {
 
             String connectName = message.substring(message.indexOf(":") + 1);
@@ -78,7 +78,7 @@ public class Connection extends Thread {
             }
 
             addUser();
-            Form.addPanel("Server", "User [" + connectName + "] connected.");
+            Form.addToLogPanel("Server", "User [" + connectName + "] connected.");
 
             return true;
 
@@ -86,7 +86,7 @@ public class Connection extends Thread {
             String disconnectName = message.substring(message.indexOf(":") + 1);
             disconnect(disconnectName);
             deleteUser(nickname);
-            Form.addPanel("Server", "User [" + nickname + "] disconnected.");
+            Form.addToLogPanel("Server", "User [" + nickname + "] disconnected.");
             return true;
         }
         return false;
