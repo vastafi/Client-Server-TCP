@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package chatclient;
 
 import java.awt.event.MouseEvent;
@@ -27,18 +22,12 @@ public class Form extends javax.swing.JFrame {
 
     private boolean running;
 
-    private String nickname;
+    private final String nickname;
     private int port;
 
     private javax.swing.JList<String> clientList;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelCloseWindow;
-    private javax.swing.JPanel jPanelDragWindow;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPaneClientList;
     private static javax.swing.JTextPane jTextPaneChat;
     private javax.swing.JTextField messageTextField;
-    private javax.swing.JButton sendMessageButton;
 
     DefaultListModel listModel = new DefaultListModel();
 
@@ -72,15 +61,15 @@ public class Form extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
        private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
+        javax.swing.JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
         jTextPaneChat = new javax.swing.JTextPane();
-        jScrollPaneClientList = new javax.swing.JScrollPane();
+        javax.swing.JScrollPane jScrollPaneClientList = new javax.swing.JScrollPane();
         clientList = new javax.swing.JList<>();
-        jPanel1 = new javax.swing.JPanel();
-        jPanelDragWindow = new javax.swing.JPanel();
-        jPanelCloseWindow = new javax.swing.JPanel();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JPanel jPanelDragWindow = new javax.swing.JPanel();
+        javax.swing.JPanel jPanelCloseWindow = new javax.swing.JPanel();
         messageTextField = new javax.swing.JTextField();
-        sendMessageButton = new javax.swing.JButton();
+        javax.swing.JButton sendMessageButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -198,7 +187,7 @@ public class Form extends javax.swing.JFrame {
     private void jPanelDragWindowMousePressed(java.awt.event.MouseEvent evt) {
 
         getPositionEvent = evt;
-    }//GEN-LAST:event_jPanelDragWindowMousePressed
+    }
 
     public void messageListener() {
         new Thread("Listener") {
@@ -230,33 +219,27 @@ public class Form extends javax.swing.JFrame {
             if (!this.nickname.equals(name)) {
                 addMessageToChat("    User [" + name + "] enter to the chat.");
             }
-
             return true;
-
         } else if (message.startsWith("\\disconnect:")) {
             String name = message.substring(message.indexOf(":") + 1);
-
             addMessageToChat("    User [" + name + "] exit from the chat.");
-
             return true;
         } else if(message.startsWith("\\userlist:")) {
             String[] users = message.split(":");
-            
             listModel.clear();
             for(int i = 1; i < users.length; i++) {
                 addToList(users[i]);
             }
-            
             return true;
         }
-
         return false;
     }
 
     private void addMessageToChat(String message) {
          jTextPaneChat.setText(jTextPaneChat.getText().concat(message + "\n"));
     }
-      public void addToList(String name) {
+
+    public void addToList(String name) {
         listModel.addElement(name);
     }
 

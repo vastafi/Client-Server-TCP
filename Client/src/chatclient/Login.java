@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package chatclient;
 
 import java.awt.Color;
@@ -18,13 +13,6 @@ public class Login extends javax.swing.JFrame {
 
     private MouseEvent getPositionEvent;
 
-    private javax.swing.JButton connectToServerButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelCloseWindow;
-    private javax.swing.JPanel jPanelDragWindow;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField portField;
     private javax.swing.JLabel resultLabel;
@@ -46,15 +34,15 @@ public class Login extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        jPanelDragWindow = new javax.swing.JPanel();
-        jPanelCloseWindow = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        javax.swing.JPanel jPanelDragWindow = new javax.swing.JPanel();
+        javax.swing.JPanel jPanelCloseWindow = new javax.swing.JPanel();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
         portField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        connectToServerButton = new javax.swing.JButton();
+        javax.swing.JButton connectToServerButton = new javax.swing.JButton();
         resultLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
