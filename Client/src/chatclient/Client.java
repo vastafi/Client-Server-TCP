@@ -5,7 +5,6 @@ package chatclient;
  * @author User
  */
 public class Client {
-
     /**
      * @param args the command line arguments
      */

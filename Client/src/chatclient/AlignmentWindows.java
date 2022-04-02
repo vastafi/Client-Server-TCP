@@ -17,7 +17,7 @@ public class AlignmentWindows {
                 thisWindows.setLocation(coordinates);
     }
     
-    public static void alignWindowToPoint(JFrame currentWindow, Point coordinates) {
-        currentWindow.setLocation(coordinates);
+    public static void alignWindowToPoint(JFrame thisWindows, Point coordinates) {
+        thisWindows.setLocation(coordinates);
     }
 }
