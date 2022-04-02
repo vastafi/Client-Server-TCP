@@ -196,10 +196,10 @@ public class Form extends javax.swing.JFrame {
             stopServer();
         }
 
-        if (jLabelServerStatus.getText().equals("OFF")) {
-            jLabelServerStatus.setText("ON");
+        if (jLabelServerStatus.getText().equals("Start")) {
+            jLabelServerStatus.setText("Stop");
         } else {
-            jLabelServerStatus.setText("OFF");
+            jLabelServerStatus.setText("Start");
         }
     }
 
@@ -238,9 +238,7 @@ public class Form extends javax.swing.JFrame {
             
             addToLogPanel("Server", "Server closed!");
             System.exit(0);
-        } catch (IOException ex) {
-            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IOException ex) {}
     }
 
     protected static void addToLogPanel(String name, String message) {

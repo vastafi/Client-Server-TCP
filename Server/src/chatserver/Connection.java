@@ -76,10 +76,8 @@ public class Connection extends Thread {
             if (this.nickname == null) {
                 this.nickname = connectName;
             }
-
             addUser();
             Form.addToLogPanel("Server", "User [" + connectName + "] connected.");
-
             return true;
 
         } else if (message.startsWith("\\disconnect:")) {
@@ -98,10 +96,8 @@ public class Connection extends Thread {
         listUsers = listUsers.concat("\\userlist");
         for (int i = 0; i < Form.serverConnection.size(); i++) {
             Connection serverConnection = Form.serverConnection.get(i);
-
             listUsers = listUsers.concat(":" + serverConnection.nickname);
         }
-
         sendMessage(listUsers);
     }
 
@@ -111,12 +107,10 @@ public class Connection extends Thread {
         listUsers = listUsers.concat("\\userlist");
         for (int i = 0; i < Form.serverConnection.size(); i++) {
             Connection serverConnection = Form.serverConnection.get(i);
-
             if (!serverConnection.nickname.equals(nickname)) {
                 listUsers = listUsers.concat(":" + serverConnection.nickname);
             }
         }
-
         sendMessage(listUsers);
     }
 

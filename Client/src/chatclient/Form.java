@@ -85,7 +85,6 @@ public class Form extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(10, 60, 700, 270);
-
         jScrollPaneClientList.setViewportView(clientList);
 
         getContentPane().add(jScrollPaneClientList);
@@ -161,13 +160,11 @@ public class Form extends javax.swing.JFrame {
         });
         getContentPane().add(sendMessageButton);
         sendMessageButton.setBounds(410, 350, 80, 21);
-
         pack();
     }
 
     private void sendMessageButtonMousePressed(java.awt.event.MouseEvent evt) {
         String message = messageTextField.getText();
-
         try {
             if (!message.isEmpty()) {
                 dOS.writeUTF(message);
@@ -188,7 +185,6 @@ public class Form extends javax.swing.JFrame {
     }
 
     private void jPanelDragWindowMousePressed(java.awt.event.MouseEvent evt) {
-
         getPositionEvent = evt;
     }                                             
 
@@ -218,19 +214,16 @@ public class Form extends javax.swing.JFrame {
         if (message.startsWith("\\connect:")) {
 
             String name = message.substring(message.indexOf(":") + 1);
-
             if (!this.nickname.equals(name)) {
                 addMessage("User [" + name + "] has entered the chat.");
             }
-
             return true;
 
         } else if (message.startsWith("\\disconnect:")) {
             String name = message.substring(message.indexOf(":") + 1);
-
             addMessage("User [" + name + "] exit.");
-
             return true;
+
         } else if(message.startsWith("\\userlist:")) {
             String[] users = message.split(":");
 
@@ -246,7 +239,8 @@ public class Form extends javax.swing.JFrame {
     private void addMessage(String message) {
          jTextPaneChat.setText(jTextPaneChat.getText().concat(message + "\n"));
     }
-      public void addToList(String name) {
+
+    public void addToList(String name) {
         listModel.addElement(name);
     }
 
@@ -257,7 +251,7 @@ public class Form extends javax.swing.JFrame {
             dOS.writeUTF("\\disconnect:" + nickname);
             System.exit(0);
         } catch (IOException ex) {
-            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

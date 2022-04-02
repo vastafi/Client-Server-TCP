@@ -178,7 +178,6 @@ public class Login extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 50, 800, 400);
-
         pack();
     }
 
@@ -216,6 +215,7 @@ public class Login extends javax.swing.JFrame {
             }
         }
     }
+
     /**
      * @param args the command line arguments
      */
