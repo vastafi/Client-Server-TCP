@@ -72,7 +72,7 @@ public class Form extends javax.swing.JFrame {
 
         jPanelServerStatus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
-                jPanelServerStatusMousePressed(evt);
+                serverStatus(evt);
             }
         });
 
@@ -128,19 +128,19 @@ public class Form extends javax.swing.JFrame {
 
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(MouseEvent evt) {
-                jPanelDragWindowMouseDragged(evt);
+                dragWindowDragged(evt);
             }
         });
         jPanelDragWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
-                jPanelDragWindowMousePressed(evt);
+                dragWindow(evt);
             }
         });
          jPanelCloseWindow.setBackground(new Color(66, 96, 128));
 
         jPanelCloseWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
-                jPanelCloseWindowMousePressed(evt);
+                closeWindow(evt);
             }
         });
 
@@ -173,20 +173,20 @@ public class Form extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jPanelCloseWindowMousePressed(MouseEvent evt) {
+    private void closeWindow(MouseEvent evt) {
         System.exit(0);
     }
 
-    private void jPanelDragWindowMouseDragged(MouseEvent evt) {
+    private void dragWindowDragged(MouseEvent evt) {
         setLocation(evt.getXOnScreen() - getPositionEvent.getX(),
                 evt.getYOnScreen() - getPositionEvent.getY());
     }
 
-    private void jPanelDragWindowMousePressed(MouseEvent evt) {
+    private void dragWindow(MouseEvent evt) {
         getPositionEvent = evt;
     }
 
-    private void jPanelServerStatusMousePressed(MouseEvent evt) {
+    private void serverStatus(MouseEvent evt) {
         if (jPanelServerStatus.getBackground() == Color.red) {
             jPanelServerStatus.setBackground(Color.green);
             int port = Integer.parseInt(jTextFieldPort.getText());
@@ -205,18 +205,17 @@ public class Form extends javax.swing.JFrame {
 
     public void startServer(int port) {
         try {
-            // Create server socket
             serverSocket = new ServerSocket(port);
             running = true;
 
-            addToLogPanel("Server", "Server started!");
-            waitForClient();
+            addPanel("Server", "Server started!");
+            waitClient();
         } catch (IOException ex) {
             System.err.println("Could not listen on indicated port" + port);
         }
     }
 
-    public void waitForClient() {
+    public void waitClient() {
         new Thread("Client listener") {
             @Override
             public void run() {
@@ -237,20 +236,17 @@ public class Form extends javax.swing.JFrame {
             serverSocket.close();
             running = false;
             
-            addToLogPanel("Server", "Server closed!");
+            addPanel("Server", "Server closed!");
             System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    protected static void addToLogPanel(String name, String message) {
+    protected static void addPanel(String name, String message) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-
-        String messageToAdd = "    " + dateFormat.format(date) + "   ["
-                + name + "]  :  " + message + "\n";
-
+        String messageToAdd = "   " + dateFormat.format(date) + " [" + name + "]  :  " + message + "\n";
         jTextPaneLog.setText(jTextPaneLog.getText().concat(messageToAdd));
     }
 

@@ -47,10 +47,10 @@ public class Form extends javax.swing.JFrame {
             dIS = new DataInputStream(clientSocket.getInputStream());
             dOS = new DataOutputStream(clientSocket.getOutputStream());
             dOS.writeUTF("\\connect:" + name);
-            addMessageToChat("\n");
+            addMessage("\n");
             clientList.setModel(listModel);
             running = true;
-            messageListener();
+            listener();
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,19 +108,19 @@ public class Form extends javax.swing.JFrame {
         jPanelDragWindow.setBackground(new java.awt.Color(156, 215, 236));
         jPanelDragWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jPanelDragWindowMouseDragged(evt);
+                dragWindow(evt);
             }
         });
         jPanelDragWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanelDragWindowMousePressed(evt);
+                dragWindowPressedMouse(evt);
             }
         });
 
         jPanelCloseWindow.setBackground(new java.awt.Color(66, 96, 128));
         jPanelCloseWindow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanelCloseWindowMousePressed(evt);
+                closeWindow(evt);
             }
         });
 
@@ -156,7 +156,7 @@ public class Form extends javax.swing.JFrame {
         sendMessageButton.setText("Send");
         sendMessageButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                sendMessageButtonMousePressed(evt);
+                sendMessage(evt);
             }
         });
         getContentPane().add(sendMessageButton);
@@ -165,7 +165,7 @@ public class Form extends javax.swing.JFrame {
         pack();
     }
 
-    private void sendMessageButtonMousePressed(java.awt.event.MouseEvent evt) {
+    private void sendMessage(java.awt.event.MouseEvent evt) {
         String message = messageTextField.getText();
 
         try {
@@ -178,21 +178,21 @@ public class Form extends javax.swing.JFrame {
         }
     }
 
-    private void jPanelCloseWindowMousePressed(java.awt.event.MouseEvent evt) {
+    private void closeWindow(java.awt.event.MouseEvent evt) {
         closeClient();
     }
 
-    private void jPanelDragWindowMouseDragged(java.awt.event.MouseEvent evt) {
+    private void dragWindow(java.awt.event.MouseEvent evt) {
           setLocation(evt.getXOnScreen() - getPositionEvent.getX(),
                 evt.getYOnScreen() - getPositionEvent.getY());
     }
 
-    private void jPanelDragWindowMousePressed(java.awt.event.MouseEvent evt) {
+    private void dragWindowPressedMouse(java.awt.event.MouseEvent evt) {
 
         getPositionEvent = evt;
     }                                             
 
-    public void messageListener() {
+    public void listener() {
         new Thread("Listener") {
             @Override
             public void run() {
@@ -201,8 +201,8 @@ public class Form extends javax.swing.JFrame {
                         String message = dIS.readUTF();
 
                         if (!message.isEmpty()) {
-                            if (!isCommand(message)) {
-                                addMessageToChat(message);
+                            if (!Command(message)) {
+                                addMessage(message);
                             }
                         }
                     }
@@ -214,13 +214,13 @@ public class Form extends javax.swing.JFrame {
         }.start();
     }
 
-    private boolean isCommand(String message) {
+    private boolean Command(String message) {
         if (message.startsWith("\\connect:")) {
 
             String name = message.substring(message.indexOf(":") + 1);
 
             if (!this.nickname.equals(name)) {
-                addMessageToChat("    User [" + name + "] enter to the chat.");
+                addMessage("User [" + name + "] has entered the chat.");
             }
 
             return true;
@@ -228,7 +228,7 @@ public class Form extends javax.swing.JFrame {
         } else if (message.startsWith("\\disconnect:")) {
             String name = message.substring(message.indexOf(":") + 1);
 
-            addMessageToChat("    User [" + name + "] exit from the chat.");
+            addMessage("User [" + name + "] exit.");
 
             return true;
         } else if(message.startsWith("\\userlist:")) {
@@ -243,7 +243,7 @@ public class Form extends javax.swing.JFrame {
         return false;
     }
 
-    private void addMessageToChat(String message) {
+    private void addMessage(String message) {
          jTextPaneChat.setText(jTextPaneChat.getText().concat(message + "\n"));
     }
       public void addToList(String name) {

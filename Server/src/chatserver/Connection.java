@@ -54,7 +54,7 @@ public class Connection extends Thread {
                String message = dIS.readUTF();
                 if (!message.isEmpty()) {
                     if (!Connect(message)) {
-                        Form.addToLogPanel(nickname, message);
+                        Form.addPanel(nickname, message);
                         sendMessage("    [" + nickname + "]:" + message);
                     } else {
                         sendMessage(message);
@@ -78,7 +78,7 @@ public class Connection extends Thread {
             }
 
             addUser();
-            Form.addToLogPanel("Server", "User [" + connectName + "] connected.");
+            Form.addPanel("Server", "User [" + connectName + "] connected.");
 
             return true;
 
@@ -86,7 +86,7 @@ public class Connection extends Thread {
             String disconnectName = message.substring(message.indexOf(":") + 1);
             disconnect(disconnectName);
             deleteUser(nickname);
-            Form.addToLogPanel("Server", "User [" + nickname + "] disconnected.");
+            Form.addPanel("Server", "User [" + nickname + "] disconnected.");
             return true;
         }
         return false;
