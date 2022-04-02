@@ -208,7 +208,7 @@ public class Login extends javax.swing.JFrame {
                 Socket socket = new Socket("localhost", Integer.parseInt(port));
                 this.dispose();
                 Form clientForm = new Form(socket, name, Integer.parseInt(port));
-                Alignment.alignWindowToPoint(clientForm, this.getLocation());
+                AlignmentWindows.alignWindowToPoint(clientForm, this.getLocation());
                 clientForm.setVisible(true);
                 
             } catch (IOException ex) {

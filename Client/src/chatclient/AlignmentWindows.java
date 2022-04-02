@@ -9,12 +9,12 @@ import javax.swing.JFrame;
  *
  * @author DaleRoyFall
  */
-public class Alignment {
-    public static void center(JFrame thisWindow) {
+public class AlignmentWindows {
+    public static void center(JFrame thisWindows) {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        Point coordinates = new Point((int)(dimension.getWidth() - thisWindow.getWidth()) / 2,
-                                (int)(dimension.getHeight() - thisWindow.getHeight()) / 2);
-                thisWindow.setLocation(coordinates);
+        Point coordinates = new Point((int)(dimension.getWidth() - thisWindows.getWidth()) / 2,
+                                (int)(dimension.getHeight() - thisWindows.getHeight()) / 2);
+                thisWindows.setLocation(coordinates);
     }
     
     public static void alignWindowToPoint(JFrame currentWindow, Point coordinates) {

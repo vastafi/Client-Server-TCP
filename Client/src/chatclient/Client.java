@@ -11,7 +11,7 @@ public class Client {
      */
     public static void main(String[] args) {
         Login loginForm = new Login();
-        Alignment.center(loginForm);
+        AlignmentWindows.center(loginForm);
         loginForm.setVisible(true);
     }
 }

@@ -22,11 +22,9 @@ public class Form extends javax.swing.JFrame {
 
     private MouseEvent getPositionEvent;
 
-    private static DataInputStream dataInputStream;
-    private static DataOutputStream dataOutputStream;
-
+    private static DataInputStream dIS;
+    private static DataOutputStream dOS;
     private boolean running;
-
     private String nickname;
     private int port;
 
@@ -46,9 +44,9 @@ public class Form extends javax.swing.JFrame {
         this.port = port;
 
         try {
-            dataInputStream = new DataInputStream(clientSocket.getInputStream());
-            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            dataOutputStream.writeUTF("\\connect:" + name);
+            dIS = new DataInputStream(clientSocket.getInputStream());
+            dOS = new DataOutputStream(clientSocket.getOutputStream());
+            dOS.writeUTF("\\connect:" + name);
             addMessageToChat("\n");
             clientList.setModel(listModel);
             running = true;
@@ -172,7 +170,7 @@ public class Form extends javax.swing.JFrame {
 
         try {
             if (!message.isEmpty()) {
-                dataOutputStream.writeUTF(message);
+                dOS.writeUTF(message);
                 messageTextField.setText("");
             }
         } catch (IOException ex) {
@@ -200,7 +198,7 @@ public class Form extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (running) {
-                        String message = dataInputStream.readUTF();
+                        String message = dIS.readUTF();
 
                         if (!message.isEmpty()) {
                             if (!isCommand(message)) {
@@ -240,10 +238,8 @@ public class Form extends javax.swing.JFrame {
             for(int i = 1; i < users.length; i++) {
                 addToList(users[i]);
             }
-
             return true;
         }
-
         return false;
     }
 
@@ -258,7 +254,7 @@ public class Form extends javax.swing.JFrame {
 
         try {
             running = false;
-            dataOutputStream.writeUTF("\\disconnect:" + nickname);
+            dOS.writeUTF("\\disconnect:" + nickname);
             System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);

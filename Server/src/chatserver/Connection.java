@@ -14,9 +14,9 @@ public class Connection extends Thread {
 
     private Thread thread;
     private Socket socket;
-    private DataInputStream dataInputStream;
-    private DataOutputStream dataOutputStream;
-    private String name;
+    private DataInputStream dIS;
+    private DataOutputStream dOS;
+    private String nickname;
     private String listUsers;
 
     private boolean running = true;
@@ -34,11 +34,11 @@ public class Connection extends Thread {
         }
     }
 
-    public void sendMessageToAllClients(String message) {
+    public void sendMessage(String message) {
         for (int i = 0; i < Form.serverConnection.size(); i++) {
             try {
                 Connection serverConnection = Form.serverConnection.get(i);
-                serverConnection.dataOutputStream.writeUTF(message);
+                serverConnection.dOS.writeUTF(message);
             } catch (IOException ex) {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -48,36 +48,36 @@ public class Connection extends Thread {
     @Override
     public void run() {
         try {
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dIS = new DataInputStream(socket.getInputStream());
+            dOS = new DataOutputStream(socket.getOutputStream());
             while (running) {
-               String message = dataInputStream.readUTF();
+               String message = dIS.readUTF();
                 if (!message.isEmpty()) {
-                    if (!isCommand(message)) {
-                        Form.addToLogPanel(name, message);
-                        sendMessageToAllClients("    [" + name + "]:" + message);
+                    if (!Connect(message)) {
+                        Form.addToLogPanel(nickname, message);
+                        sendMessage("    [" + nickname + "]:" + message);
                     } else {
-                        sendMessageToAllClients(message);
+                        sendMessage(message);
                     }
                 }
             }
-            dataInputStream.close();
-            dataOutputStream.close();
+            dIS.close();
+            dOS.close();
             socket.close();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private boolean isCommand(String message) {
+    private boolean Connect(String message) {
         if (message.startsWith("\\connect:")) {
 
             String connectName = message.substring(message.indexOf(":") + 1);
-            if (this.name == null) {
-                this.name = connectName;
+            if (this.nickname == null) {
+                this.nickname = connectName;
             }
 
-            addInUserList();
+            addUser();
             Form.addToLogPanel("Server", "User [" + connectName + "] connected.");
 
             return true;
@@ -85,45 +85,45 @@ public class Connection extends Thread {
         } else if (message.startsWith("\\disconnect:")) {
             String disconnectName = message.substring(message.indexOf(":") + 1);
             disconnect(disconnectName);
-            deleteFromUserList(name);
-            Form.addToLogPanel("Server", "User [" + name + "] disconnected.");
+            deleteUser(nickname);
+            Form.addToLogPanel("Server", "User [" + nickname + "] disconnected.");
             return true;
         }
         return false;
     }
 
-    private void addInUserList() {
+    private void addUser() {
         listUsers = "";
 
         listUsers = listUsers.concat("\\userlist");
         for (int i = 0; i < Form.serverConnection.size(); i++) {
             Connection serverConnection = Form.serverConnection.get(i);
 
-            listUsers = listUsers.concat(":" + serverConnection.name);
+            listUsers = listUsers.concat(":" + serverConnection.nickname);
         }
 
-        sendMessageToAllClients(listUsers);
+        sendMessage(listUsers);
     }
 
-    private void deleteFromUserList(String name) {
+    private void deleteUser(String nickname) {
         listUsers = "";
 
         listUsers = listUsers.concat("\\userlist");
         for (int i = 0; i < Form.serverConnection.size(); i++) {
             Connection serverConnection = Form.serverConnection.get(i);
 
-            if (!serverConnection.name.equals(name)) {
-                listUsers = listUsers.concat(":" + serverConnection.name);
+            if (!serverConnection.nickname.equals(nickname)) {
+                listUsers = listUsers.concat(":" + serverConnection.nickname);
             }
         }
 
-        sendMessageToAllClients(listUsers);
+        sendMessage(listUsers);
     }
 
     protected void disconnect(String disconnectName) {
         for (int i = 0; i < Form.serverConnection.size(); i++) {
             Connection serverConnection = Form.serverConnection.get(i);
-            if (serverConnection.name.equals(disconnectName)) {
+            if (serverConnection.nickname.equals(disconnectName)) {
                 serverConnection.running = false;
                 Form.serverConnection.remove(i);
                 break;

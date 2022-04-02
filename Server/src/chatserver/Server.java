@@ -11,7 +11,7 @@ public class Server {
      */
     public static void main(String[] args) {
         Form serverForm = new Form();
-        Alignment.center(serverForm);
+        AlignmentWindows.center(serverForm);
         serverForm.setVisible(true);
         }
     }
