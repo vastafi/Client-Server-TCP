@@ -29,24 +29,24 @@ public class Form extends javax.swing.JFrame {
     private int port;
 
     private javax.swing.JList<String> clientList;
-    private static javax.swing.JTextPane jTextPaneChat;
-    private javax.swing.JTextField messageTextField;
+    private static javax.swing.JTextPane jText;
+    private javax.swing.JTextField message;
 
     DefaultListModel listModel = new DefaultListModel();
 
     /**
      * Creates new form ClientForm
      */
-    public Form(Socket clientSocket, String name, int port) {
+    public Form(Socket clientSocket, String nickname, int port) {
         initComponents();
 
-        this.nickname = name;
+        this.nickname = nickname;
         this.port = port;
 
         try {
             dIS = new DataInputStream(clientSocket.getInputStream());
             dOS = new DataOutputStream(clientSocket.getOutputStream());
-            dOS.writeUTF("\\connect:" + name);
+            dOS.writeUTF("\\connect:" + nickname);
             addMessage("\n");
             clientList.setModel(listModel);
             running = true;
@@ -65,13 +65,13 @@ public class Form extends javax.swing.JFrame {
        private void initComponents() {
 
         javax.swing.JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPaneChat = new javax.swing.JTextPane();
+        jText = new javax.swing.JTextPane();
         javax.swing.JScrollPane jScrollPaneClientList = new javax.swing.JScrollPane();
         clientList = new javax.swing.JList<>();
         javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
         javax.swing.JPanel jPanelDragWindow = new javax.swing.JPanel();
         javax.swing.JPanel jPanelCloseWindow = new javax.swing.JPanel();
-        messageTextField = new javax.swing.JTextField();
+        message = new javax.swing.JTextField();
         javax.swing.JButton sendMessageButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -79,9 +79,9 @@ public class Form extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 450));
         getContentPane().setLayout(null);
 
-        jTextPaneChat.setEditable(false);
-        jTextPaneChat.setBorder(null);
-        jScrollPane2.setViewportView(jTextPaneChat);
+        jText.setEditable(false);
+        jText.setBorder(null);
+        jScrollPane2.setViewportView(jText);
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(10, 60, 700, 270);
@@ -149,8 +149,8 @@ public class Form extends javax.swing.JFrame {
 
         getContentPane().add(jPanelDragWindow);
         jPanelDragWindow.setBounds(0, 0, 800, 50);
-        getContentPane().add(messageTextField);
-        messageTextField.setBounds(10, 350, 390, 20);
+        getContentPane().add(message);
+        message.setBounds(10, 350, 390, 20);
 
         sendMessageButton.setText("Send");
         sendMessageButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,11 +164,11 @@ public class Form extends javax.swing.JFrame {
     }
 
     private void sendMessageButtonMousePressed(java.awt.event.MouseEvent evt) {
-        String message = messageTextField.getText();
+        String message = this.message.getText();
         try {
             if (!message.isEmpty()) {
                 dOS.writeUTF(message);
-                messageTextField.setText("");
+                this.message.setText("");
             }
         } catch (IOException ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
@@ -237,7 +237,7 @@ public class Form extends javax.swing.JFrame {
     }
 
     private void addMessage(String message) {
-         jTextPaneChat.setText(jTextPaneChat.getText().concat(message + "\n"));
+         jText.setText(jText.getText().concat(message + "\n"));
     }
 
     public void addToList(String name) {

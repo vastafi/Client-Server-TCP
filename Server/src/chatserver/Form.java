@@ -37,7 +37,7 @@ public class Form extends javax.swing.JFrame {
         initComponents();
 
         jPanelServerStatus.setBackground(Color.red);
-        jLabelServerStatus.setText("OFF");
+        jLabelServerStatus.setText("Stop");
         jTextPaneLog.setText("\n\n");
     }
 
@@ -78,7 +78,7 @@ public class Form extends javax.swing.JFrame {
 
         jLabelServerStatus.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabelServerStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelServerStatus.setText("Off");
+        jLabelServerStatus.setText("Stop");
 
         javax.swing.GroupLayout jPanelServerStatusLayout = new javax.swing.GroupLayout(jPanelServerStatus);
         jPanelServerStatus.setLayout(jPanelServerStatusLayout);
@@ -196,10 +196,10 @@ public class Form extends javax.swing.JFrame {
             stopServer();
         }
 
-        if (jLabelServerStatus.getText().equals("Start")) {
-            jLabelServerStatus.setText("Stop");
-        } else {
+        if (jLabelServerStatus.getText().equals("Stop")) {
             jLabelServerStatus.setText("Start");
+        } else {
+            jLabelServerStatus.setText("Stop");
         }
     }
 
